@@ -1,8 +1,11 @@
 import { useEffect, useState } from "react";
 import api from "../../service/api";
+import { Link } from "react-router-dom";
+import "./Home.css";
 
 function Home() {
   const [filmes, setFilmes] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   //Ao carregar a pagina, faz uma requisição para API
   useEffect(() => {
@@ -16,16 +19,31 @@ function Home() {
       });
       console.log(response.data);
       setFilmes(response.data.results.slice(0, 10));
+      setLoading(false);
     }
     laodFilmes();
   }, []);
+
+  if (loading) {
+    return (
+      <div className="loading">
+        <h2>Carregano filmes...</h2>
+      </div>
+    );
+  }
+
   return (
-    <div>
-      <div>
+    <div className="container">
+      <div className="lista-filmes">
         {filmes.map((filme) => {
           return (
             <article key={filme.id}>
               <strong>{filme.title}</strong>
+              <img
+                src={`https://image.tmdb.org/t/p/original/${filme.poster_path}`}
+                alt={filme.title}
+              />
+              <Link to={`/filme/${filme.id}`}>Acessar</Link>
             </article>
           );
         })}
