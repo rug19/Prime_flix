@@ -1,5 +1,9 @@
-
-
-.not-found{
-    font-size: 150px;
+.not-found {
+    width: 100%;
+    height:  calc(100vh - 60px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
 }
+
