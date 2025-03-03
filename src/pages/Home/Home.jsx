@@ -17,13 +17,13 @@ function Home() {
           page: 1,
         },
       });
-      console.log(response.data);
-      setFilmes(response.data.results.slice(0, 10));
-      setLoading(false);
+      setFilmes(response.data.results.slice(0, 10));//Carrega apenas 10 objetos cotendo os dados
+      setLoading(false);//Caso encontre o objeto loading ira sair da tela
     }
     laodFilmes();
   }, []);
 
+  //Mostra que esta esperando carregar o objeto
   if (loading) {
     return (
       <div className="loading">
@@ -32,6 +32,7 @@ function Home() {
     );
   }
 
+  
   return (
     <div className="container">
       <div className="lista-filmes">
