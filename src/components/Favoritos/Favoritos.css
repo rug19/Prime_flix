@@ -1,5 +1,9 @@
 .meus-filmes {
   margin-top: 24px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 .meus-filmes h1 {
@@ -28,9 +32,9 @@
 }
 
 .meus-filmes a {
-    text-decoration: none;
-    margin-right: 10px;
-    color: black;
+  text-decoration: none;
+  margin-right: 10px;
+  color: black;
 }
 
 .meus-filmes button {
@@ -38,6 +42,8 @@
   background-color: red;
   padding: 8px;
   border-radius: 4px;
- 
   border: none;
+  cursor: pointer;
 }
+
+
