@@ -35,6 +35,10 @@
   text-decoration: none;
   margin-right: 10px;
   color: black;
+  background-color: blue;
+  padding: 8px;
+  border-radius: 4px;
+  color: white;
 }
 
 .meus-filmes button {
@@ -45,5 +49,3 @@
   border: none;
   cursor: pointer;
 }
-
-
