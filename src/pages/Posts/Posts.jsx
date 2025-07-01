@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { db } from "../../config/firebaseConnection";
-import { doc, setDoc } from "firebase/firestore";
+import { addDoc, collection, getDoc, doc } from "firebase/firestore";
 import "./Posts.css";
 
 export default function Posts() {
@@ -9,18 +9,32 @@ export default function Posts() {
 
   //Function to register a new post
   async function handleAdd() {
-    await setDoc(doc(db, "posts", "3"), {
-      titulo: titulo,
-      autor: autor,
-    })
-      .then(() => {
-        console.log("Post cadastrado com sucesso");
-        setTitulo("");
-        setAutor("");
-      })
-      .catch((error) => {
-        console.error("Erro ao cadastrar o post", error);
+    try {
+      await addDoc(collection(db, "posts"), {
+        titulo: titulo,
+        autor: autor,
       });
+
+      console.log("Post cadastrado co sucesso");
+      setTitulo("");
+      setAutor("");
+    } catch (error) {
+      console.log("Erro a o cadastrar o post", error);
+    }
+  }
+
+  
+  async function buscarPost() {
+    const postRef = doc(db, "posts", "2");
+
+    try {
+      const snapshot = await getDoc(postRef);
+      setAutor(snapshot.data().autor);
+      setTitulo(snapshot.data().titulo);
+      console.log("Post buscado com sucesso ");
+    } catch (error) {
+      console.log("Erro ao buscar o post", error);
+    }
   }
 
   return (
@@ -44,6 +58,7 @@ export default function Posts() {
           onChange={(e) => setAutor(e.target.value)}
         />
         <button onClick={handleAdd}> cadastrar</button>
+        <button onClick={buscarPost}> Buscar post</button>
       </div>
     </main>
   );
