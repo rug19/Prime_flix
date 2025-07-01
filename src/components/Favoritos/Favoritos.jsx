@@ -18,7 +18,7 @@ function Favoritos() {
       return item.id !== id;
     });
 
-    setFilme(filtroFilmes);
+    setFilme(filtroFilmes); 
     localStorage.setItem("@primeflix", JSON.stringify(filtroFilmes));
     toast.success("Filme removido com sucesso ");
   }
