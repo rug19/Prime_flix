@@ -7,9 +7,14 @@ function Header() {
       <Link className="logo" to="/">
         Prime Flix
       </Link>
-      <Link className="favoritos" to="/favoritos">
-        Meus filmes
-      </Link>
+      <nav className="navContainer">
+        <Link className="favoritos" to="/favoritos">
+          Meus filmes
+        </Link>
+        <Link className="Posts" to="/Posts">
+          Meus Posts
+        </Link>
+      </nav>
     </header>
   );
 }

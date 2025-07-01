@@ -18,10 +18,17 @@ header a {
   color: red;
 }
 
-.favoritos {
+.navContainer a {
   cursor: pointer;
   background-color: white;
   padding: 5px 14px;
   border-radius: 4px;
   color: black;
+}
+
+.navContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
 }
