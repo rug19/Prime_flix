@@ -1,11 +1,12 @@
 import { useState } from "react";
 import { db } from "../../config/firebaseConnection";
-import { addDoc, collection, getDoc, doc } from "firebase/firestore";
+import { addDoc, collection, getDoc, doc, getDocs } from "firebase/firestore";
 import "./Posts.css";
 
 export default function Posts() {
   const [titulo, setTitulo] = useState("");
   const [autor, setAutor] = useState("");
+  const [post, setPost] = useState([]);
 
   //Function to register a new post
   async function handleAdd() {
@@ -23,7 +24,6 @@ export default function Posts() {
     }
   }
 
-  
   async function buscarPost() {
     const postRef = doc(db, "posts", "2");
 
@@ -34,6 +34,25 @@ export default function Posts() {
       console.log("Post buscado com sucesso ");
     } catch (error) {
       console.log("Erro ao buscar o post", error);
+    }
+  }
+
+  async function buscarTodos() {
+    const postsRef = collection(db, "posts");
+
+    try {
+      const snapshot = await getDocs(postsRef);
+      let lista = [];
+      snapshot.forEach((doc) => {
+        lista.push({
+          id: doc.id,
+          autor: doc.data().autor,
+          titulo: doc.data().titulo,
+        });
+        setPost(lista);
+      });
+    } catch (error) {
+      console.log("Erro ao carregar os posts", error);
     }
   }
 
@@ -59,7 +78,19 @@ export default function Posts() {
         />
         <button onClick={handleAdd}> cadastrar</button>
         <button onClick={buscarPost}> Buscar post</button>
+        <button onClick={buscarTodos}> Buscar todos os Posts</button>
       </div>
+      <ul style={{ marginTop: 10 }}>
+        {post.map((data) => {
+          return (
+            <li key={data.id}>
+              <p>Titulo:{data.titulo}</p>
+              <p>Autor:{data.autor}</p>
+              <br />
+            </li>
+          );
+        })}
+      </ul>
     </main>
   );
 }
