@@ -7,6 +7,7 @@ import {
   doc,
   getDocs,
   updateDoc,
+  deleteDoc,
 } from "firebase/firestore";
 import "./Posts.css";
 
@@ -81,7 +82,13 @@ export default function Posts() {
   }
 
   async function excluirPost(id) {
-    alert(id);
+    const postRef = doc(db, "posts", id);
+    try {
+      await deleteDoc(postRef);
+      console.log("Post deletado co sucesso");
+    } catch (error) {
+      console.log("Erro ao deletar post", error);
+    }
   }
 
   return (
