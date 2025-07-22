@@ -1,12 +1,20 @@
 import { useState } from "react";
 import { db } from "../../config/firebaseConnection";
-import { addDoc, collection, getDoc, doc, getDocs } from "firebase/firestore";
+import {
+  addDoc,
+  collection,
+  getDoc,
+  doc,
+  getDocs,
+  updateDoc,
+} from "firebase/firestore";
 import "./Posts.css";
 
 export default function Posts() {
   const [titulo, setTitulo] = useState("");
   const [autor, setAutor] = useState("");
   const [post, setPost] = useState([]);
+  const [idPost, setIdPost] = useState("");
 
   //Function to register a new post
   async function handleAdd() {
@@ -56,10 +64,38 @@ export default function Posts() {
     }
   }
 
+  async function atualizarPost() {
+    const postRef = doc(db, "posts", idPost);
+
+    try {
+      await updateDoc(postRef, {
+        titulo: titulo,
+        autor: autor,
+      });
+      setIdPost("");
+      setAutor("");
+      setTitulo("");
+    } catch (error) {
+      console.log("Erro ao autualizar post", error);
+    }
+  }
+
+  async function excluirPost(id) {
+    alert(id);
+  }
+
   return (
     <main className="container">
       <h1 className="titulo">Meus Posts</h1>
       <div className="formContainer">
+        <label>Id do post: </label>
+        <input
+          type="text "
+          placeholder="Digite o id do post"
+          value={idPost}
+          onChange={(e) => setIdPost(e.target.value)}
+        />
+        <br />
         <label>Titulo: </label>
         <textarea
           className="input"
@@ -79,13 +115,18 @@ export default function Posts() {
         <button onClick={handleAdd}> cadastrar</button>
         <button onClick={buscarPost}> Buscar post</button>
         <button onClick={buscarTodos}> Buscar todos os Posts</button>
+        <button onClick={atualizarPost}> Atualizar Post</button>
       </div>
+
       <ul style={{ marginTop: 10 }}>
         {post.map((data) => {
           return (
             <li key={data.id}>
+              <p>Id: {data.id}</p>
               <p>Titulo:{data.titulo}</p>
               <p>Autor:{data.autor}</p>
+              <button onClick={() => excluirPost(data.id)}>Excluir</button>
+              <br />
               <br />
             </li>
           );
