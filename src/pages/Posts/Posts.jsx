@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { db } from "../../config/firebaseConnection";
 import {
   addDoc,
@@ -8,6 +8,7 @@ import {
   getDocs,
   updateDoc,
   deleteDoc,
+  onSnapshot,
 } from "firebase/firestore";
 import "./Posts.css";
 
@@ -16,6 +17,23 @@ export default function Posts() {
   const [autor, setAutor] = useState("");
   const [post, setPost] = useState([]);
   const [idPost, setIdPost] = useState("");
+
+  useEffect(() => {
+    async function loadPost() {
+      onSnapshot(collection(db, "posts"), (snapshot) => {
+        let lista = [];
+        snapshot.forEach((doc) => {
+          lista.push({
+            id: doc.id,
+            autor: doc.data().autor,
+            titulo: doc.data().titulo,
+          });
+          setPost(lista);
+        });
+      });
+    }
+    loadPost();
+  }, []);
 
   //Function to register a new post
   async function handleAdd() {
