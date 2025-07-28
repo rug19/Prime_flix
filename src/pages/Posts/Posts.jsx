@@ -11,6 +11,7 @@ import {
   onSnapshot,
 } from "firebase/firestore";
 import "./Posts.css";
+import Header from "../../components/Header/Header";
 
 export default function Posts() {
   const [titulo, setTitulo] = useState("");
@@ -110,7 +111,8 @@ export default function Posts() {
   }
 
   return (
-    <main className="container">
+    <main className="containerPosts">
+      <Header/>
       <h1 className="titulo">Meus Posts</h1>
       <div className="formContainer">
         <label>Id do post: </label>

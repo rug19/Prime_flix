@@ -35,6 +35,7 @@ function Filme() {
     };
   }, [id, navigation]);
 
+
   //Funcao para salvar o filme no local storage
   function salvarFilme() {
     const minhaLista = localStorage.getItem("@primeflix");
@@ -63,7 +64,9 @@ function Filme() {
   }
 
   return (
+    
     <div className="filme-info">
+  
       <h1>{filme.title}</h1>
       <img
         src={`https://image.tmdb.org/t/p/original/${filme.backdrop_path}`}
