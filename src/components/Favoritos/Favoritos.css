@@ -1,5 +1,4 @@
 .meus-filmes {
-  margin-top: 24px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -31,7 +30,7 @@
   align-items: center;
 }
 
-.meus-filmes a {
+.link {
   text-decoration: none;
   margin-right: 10px;
   color: black;

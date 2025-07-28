@@ -1,11 +1,40 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { db } from "../../config/firebaseConnection";
-import { addDoc, collection, getDoc, doc } from "firebase/firestore";
+import {
+  addDoc,
+  collection,
+  getDoc,
+  doc,
+  getDocs,
+  updateDoc,
+  deleteDoc,
+  onSnapshot,
+} from "firebase/firestore";
 import "./Posts.css";
+import Header from "../../components/Header/Header";
 
 export default function Posts() {
   const [titulo, setTitulo] = useState("");
   const [autor, setAutor] = useState("");
+  const [post, setPost] = useState([]);
+  const [idPost, setIdPost] = useState("");
+
+  useEffect(() => {
+    async function loadPost() {
+      onSnapshot(collection(db, "posts"), (snapshot) => {
+        let lista = [];
+        snapshot.forEach((doc) => {
+          lista.push({
+            id: doc.id,
+            autor: doc.data().autor,
+            titulo: doc.data().titulo,
+          });
+          setPost(lista);
+        });
+      });
+    }
+    loadPost();
+  }, []);
 
   //Function to register a new post
   async function handleAdd() {
@@ -23,7 +52,6 @@ export default function Posts() {
     }
   }
 
-  
   async function buscarPost() {
     const postRef = doc(db, "posts", "2");
 
@@ -37,10 +65,64 @@ export default function Posts() {
     }
   }
 
+  async function buscarTodos() {
+    const postsRef = collection(db, "posts");
+
+    try {
+      const snapshot = await getDocs(postsRef);
+      let lista = [];
+      snapshot.forEach((doc) => {
+        lista.push({
+          id: doc.id,
+          autor: doc.data().autor,
+          titulo: doc.data().titulo,
+        });
+        setPost(lista);
+      });
+    } catch (error) {
+      console.log("Erro ao carregar os posts", error);
+    }
+  }
+
+  async function atualizarPost() {
+    const postRef = doc(db, "posts", idPost);
+
+    try {
+      await updateDoc(postRef, {
+        titulo: titulo,
+        autor: autor,
+      });
+      setIdPost("");
+      setAutor("");
+      setTitulo("");
+    } catch (error) {
+      console.log("Erro ao autualizar post", error);
+    }
+  }
+
+  async function excluirPost(id) {
+    const postRef = doc(db, "posts", id);
+    try {
+      await deleteDoc(postRef);
+      console.log("Post deletado co sucesso");
+    } catch (error) {
+      console.log("Erro ao deletar post", error);
+    }
+  }
+
   return (
-    <main className="container">
+    <main className="containerPosts">
+      <Header/>
       <h1 className="titulo">Meus Posts</h1>
       <div className="formContainer">
+        <label>Id do post: </label>
+        <input
+          type="text "
+          placeholder="Digite o id do post"
+          value={idPost}
+          onChange={(e) => setIdPost(e.target.value)}
+        />
+        <br />
         <label>Titulo: </label>
         <textarea
           className="input"
@@ -59,7 +141,24 @@ export default function Posts() {
         />
         <button onClick={handleAdd}> cadastrar</button>
         <button onClick={buscarPost}> Buscar post</button>
+        <button onClick={buscarTodos}> Buscar todos os Posts</button>
+        <button onClick={atualizarPost}> Atualizar Post</button>
       </div>
+
+      <ul style={{ marginTop: 10 }}>
+        {post.map((data) => {
+          return (
+            <li key={data.id}>
+              <p>Id: {data.id}</p>
+              <p>Titulo:{data.titulo}</p>
+              <p>Autor:{data.autor}</p>
+              <button onClick={() => excluirPost(data.id)}>Excluir</button>
+              <br />
+              <br />
+            </li>
+          );
+        })}
+      </ul>
     </main>
   );
 }

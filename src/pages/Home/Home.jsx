@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import api from "../../service/api";
 import { Link } from "react-router-dom";
 import "./Home.css";
+import Header from "../../components/Header/Header";
 
 function Home() {
   const [filmes, setFilmes] = useState([]);
@@ -17,8 +18,8 @@ function Home() {
           page: 1,
         },
       });
-      setFilmes(response.data.results.slice(0, 10));//Carrega apenas 10 objetos cotendo os dados
-      setLoading(false);//Caso encontre o objeto loading ira sair da tela
+      setFilmes(response.data.results.slice(0, 10)); //Carrega apenas 10 objetos cotendo os dados
+      setLoading(false); //Caso encontre o objeto loading ira sair da tela
     }
     laodFilmes();
   }, []);
@@ -32,9 +33,9 @@ function Home() {
     );
   }
 
-  
   return (
-    <div className="container">
+    <div>
+      <Header />
       <div className="lista-filmes">
         {filmes.map((filme) => {
           return (
