@@ -14,6 +14,7 @@ export default function Login() {
             placeholder="Digite a sua senha"
             type="password"
           />
+          <button>Enviar</button>
         </div>
       </div>
     </div>
