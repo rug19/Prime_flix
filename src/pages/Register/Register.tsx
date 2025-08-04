@@ -14,7 +14,11 @@ export default function Register() {
       setPasword("");
       console.log("Usuario cadastrado com sucesso");
     } catch (error) {
-      console.log("Erro ao cadastrar o usuario", error);
+      if (error.code === "auth/weak-password") {
+        alert("Senha muito fraca");
+      } else if (error.code === "auth/email-already-in-use") {
+        alert("Email já existe!");
+      }
     }
   }
 
