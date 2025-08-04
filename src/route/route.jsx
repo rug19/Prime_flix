@@ -5,18 +5,19 @@ import Error from "../components/Error/Error";
 import Favoritos from "../components/Favoritos/Favoritos";
 import Posts from "../pages/Posts/Posts";
 import Login from "../pages/Login/Login";
+import Register from "../pages/Register/Register";
 
 function RoutesApp() {
   return (
     <>
       <BrowserRouter>
-       
         <Routes>
           <Route path="/" element={<Login />} />
           <Route path="/home" element={<Home />} />
           <Route path="/filme/:id" element={<Filme />} />
           <Route path="/favoritos" element={<Favoritos />} />
           <Route path="/Posts" element={<Posts />} />
+          <Route path="/Cadastro" element={<Register />} />
           <Route path="*" element={<Error />} />
         </Routes>
       </BrowserRouter>
