@@ -1,33 +1,20 @@
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import { signInWithEmailAndPassword } from "firebase/auth";
-import { auth } from "../../config/firebaseConnection";
+import { Link } from "react-router-dom";
 
 import "./Login.css";
+import { useAuth } from "../../hooks/useAuth";
 
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPasword] = useState("");
-  const navigate = useNavigate();
+  const { handleLogin } = useAuth();
 
-  async function handleLogin() {
-    try {
-      await signInWithEmailAndPassword(auth, email, password);
-      console.log("Usuario logado com sucesso");
-      navigate("/home");
-      setEmail("");
-      setPasword("");
-    } catch (error) {
-      console.error("Erro ao logar usuario");
-    }
-  }
+  const onSubmit = () => handleLogin(email, password);
 
   return (
     <div className="loginContainer">
       <div className="card">
-        <h1>Login
-          
-        </h1>
+        <h1>Login</h1>
         <div className="input">
           <label htmlFor="emailInput">Email</label>
           <input
@@ -45,7 +32,7 @@ export default function Login() {
             placeholder="Digite a sua senha"
             type="password"
           />
-          <button onClick={handleLogin} className="button">
+          <button onClick={onSubmit} className="button">
             Enviar
           </button>
           <Link to="/cadastro">Não tem conta? Cadastre-se aqui</Link>
