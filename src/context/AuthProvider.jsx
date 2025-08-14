@@ -16,9 +16,9 @@ export function AuthProvider({ children }) {
     }
   }
 
-  async function Register(email, password) {
+  async function Register(email, password, userData) {
     try {
-      const userCredential = await registerService(email, password);
+      const userCredential = await registerService(email, password, userData);
       setUser(userCredential.user);
       console.log("Usuario cadastrado com sucesso");
     } catch (error) {

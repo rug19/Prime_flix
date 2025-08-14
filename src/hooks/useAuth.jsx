@@ -9,15 +9,17 @@ export function useAuth() {
   async function handleLogin(email, password) {
     try {
       await Login(email, password);
+      console.log("Login feito com sucesso");
       navigate("/home");
     } catch (error) {
       console.error("Erro ao fazer o login", error);
     }
   }
 
-  async function handleRegister(email, password) {
+  async function handleRegister(email, password, userData) {
     try {
-      await Register(email, password);
+      await Register(email, password, userData);
+      console.log("Cadastro realizado com sucesso");
     } catch (error) {
       console.error("Erro ao cadastrar um usuario", error);
     }
