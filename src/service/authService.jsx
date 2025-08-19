@@ -35,3 +35,5 @@ export async function registerService(email, password, userData) {
     throw error;
   }
 }
+
+export async function logOutService() {}

@@ -3,7 +3,7 @@ import { AuthContext } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
 
 export function useAuth() {
-  const { user, Login, Register } = useContext(AuthContext);
+  const { user, Login, Register, userData } = useContext(AuthContext);
   const navigate = useNavigate();
 
   async function handleLogin(email, password) {
@@ -25,5 +25,5 @@ export function useAuth() {
     }
   }
 
-  return { handleLogin, handleRegister, user };
+  return { handleLogin, handleRegister, user, userData };
 }

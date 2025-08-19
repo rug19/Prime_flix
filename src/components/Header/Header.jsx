@@ -1,8 +1,10 @@
 import { FaUserCircle } from "react-icons/fa";
 import "./style.css";
 import { Link } from "react-router-dom";
+import { useAuth } from "../../hooks/useAuth";
 
 function Header() {
+  const { userData } = useAuth();
   return (
     <header>
       <h1 className="logo">Prime Flix</h1>
@@ -11,14 +13,14 @@ function Header() {
         <Link to="/favoritos">Meus filmes</Link>
         <Link to="/Posts">Meus Posts</Link>
       </nav>
-      <div>
+      <div className="userContainer">
         <Link>
           <FaUserCircle color="white" size={24} />
         </Link>
+        <span className="user">Olá, {userData?.nome}</span>
       </div>
     </header>
   );
 }
 
 export default Header;
-
