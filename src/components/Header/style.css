@@ -43,3 +43,10 @@ header a {
   align-items: center;
   gap: 8px;
 }
+
+.Headerbutton {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: white;
+}

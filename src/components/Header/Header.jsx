@@ -1,10 +1,10 @@
-import { FaUserCircle } from "react-icons/fa";
+import { FiLogOut } from "react-icons/fi";
 import "./style.css";
 import { Link } from "react-router-dom";
 import { useAuth } from "../../hooks/useAuth";
 
 function Header() {
-  const { userData } = useAuth();
+  const { userData, handleLogout } = useAuth();
   return (
     <header>
       <h1 className="logo">Prime Flix</h1>
@@ -14,10 +14,10 @@ function Header() {
         <Link to="/Posts">Meus Posts</Link>
       </nav>
       <div className="userContainer">
-        <Link>
-          <FaUserCircle color="white" size={24} />
-        </Link>
         <span className="user">Olá, {userData?.nome}</span>
+        <button className="Headerbutton" onClick={handleLogout}>
+          <FiLogOut  size={24} />
+        </button>
       </div>
     </header>
   );

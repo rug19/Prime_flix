@@ -1,7 +1,7 @@
 import { AuthContext } from "./AuthContext";
 import { useEffect, useState } from "react";
 import { loginService, registerService } from "../service/authService";
-import { onAuthStateChanged } from "firebase/auth";
+import { onAuthStateChanged, signOut } from "firebase/auth";
 import { auth, db } from "../config/firebaseConnection";
 import { doc, getDoc } from "firebase/firestore";
 
@@ -48,8 +48,19 @@ export function AuthProvider({ children }) {
     }
   }
 
+  async function Logout() {
+    try {
+      await signOut(auth);
+      setUser(null);
+      setUserData(null);
+      console.log("Usuario saiu")
+    } catch (error) {
+      console.log("Erro ao fazer logout: ", error);
+    }
+  }
+
   return (
-    <AuthContext.Provider value={{ user,userData, Login, Register }}>
+    <AuthContext.Provider value={{ user, userData, Login, Register, Logout }}>
       {children}
     </AuthContext.Provider>
   );

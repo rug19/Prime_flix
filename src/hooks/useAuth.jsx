@@ -3,7 +3,7 @@ import { AuthContext } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
 
 export function useAuth() {
-  const { user, Login, Register, userData } = useContext(AuthContext);
+  const { user, Login, Register, userData, Logout } = useContext(AuthContext);
   const navigate = useNavigate();
 
   async function handleLogin(email, password) {
@@ -25,5 +25,15 @@ export function useAuth() {
     }
   }
 
-  return { handleLogin, handleRegister, user, userData };
+  async function handleLogout() {
+    try {
+      await Logout();
+      navigate("/");
+      console.log("Logout realizado com sucesso");
+    } catch (error) {
+      console.log("Erro ao sair", error);
+    }
+  }
+
+  return { handleLogin, handleRegister, user, userData, handleLogout };
 }
